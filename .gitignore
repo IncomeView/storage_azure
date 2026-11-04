@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtualenv
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Environment
+.env
+
+# Azure
+.azure/
+
+# Generated files
+docs/_PROJECT_KNOWLEDGE_BASE.md
+docs/_PROJECT_RAG_INDEX.json
+docs/_PROJECT_ARCHITECTURE.json
+
+# Data
+data/
+exports/
+storage/
+tmp/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,10 +1,13 @@
 # src/storage_azure/pipelines/publish_dataset.py
 
-from storage_azure.datasets.metadata import (get_dataset)
-from storage_azure.pipelines.export_dataset import (export_dataset)
+from pathlib import Path
+from storage_azure.datasets.metadata import (get_dataset, generate_metadata, save_metadata)
+from storage_azure.database.postgres import (read_table)
+from storage_azure.parquet.writer import (save_parquet)
+from storage_azure.settings import (EXPORT_DIR)
 
 
-def publish_dataset(dataset_name: str,):
+def publish_dataset(dataset_name: str):
     dataset = get_dataset(dataset_name)
 
     if dataset is None:
@@ -13,10 +16,24 @@ def publish_dataset(dataset_name: str,):
             f"não encontrado."
         )
 
-    export_info = export_dataset(
+    df = read_table(
         table=dataset["table"],
         schema=dataset["schema"],
     )
+
+    parquet_file = (
+        EXPORT_DIR
+        / f"{dataset_name}.parquet"
+    )
+
+    save_parquet(df, parquet_file)
+    metadata = generate_metadata(dataset_name, df)
+    metadata_file = (
+        EXPORT_DIR
+        / f"{dataset_name}.metadata.json"
+    )
+
+    save_metadata(metadata, metadata_file)
 
     return {
         "dataset": dataset_name,
@@ -25,5 +42,7 @@ def publish_dataset(dataset_name: str,):
         "layer": dataset["layer"],
         "format": dataset["format"],
         "description": dataset["description"],
-        "export": export_info,
+        "rows": len(df),
+        "parquet_file": str(parquet_file),
+        "metadata_file": str(metadata_file),
     }

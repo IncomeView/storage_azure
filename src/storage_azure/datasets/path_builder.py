@@ -3,7 +3,6 @@
 from pathlib import Path
 
 
-def build_dataset_path(dataset: dict,):
-
+def build_dataset_path(dataset: dict):
     return Path(dataset["layer"]
                 ) / Path(dataset["project"])

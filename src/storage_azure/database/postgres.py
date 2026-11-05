@@ -43,3 +43,14 @@ def read_table(table: str, schema: str = "bcb"):
     """
 
     return pd.read_sql(query, get_engine())
+
+
+def list_tables(schema: str = "bcb"):
+    query = f"""
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE table_schema = '{schema}'
+    ORDER BY table_name
+    """
+
+    return pd.read_sql(query, get_engine())["table_name"].tolist()

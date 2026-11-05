@@ -2,6 +2,7 @@
 
 from storage_azure.database.postgres import (read_table)
 from storage_azure.parquet.writer import (save_parquet)
+from storage_azure.settings import (EXPORT_DIR)
 
 
 def export_dataset(
@@ -14,11 +15,15 @@ def export_dataset(
         schema=schema,
     )
 
-    output_file = (f"exports/{table}.parquet")
+    output_file = (f"{EXPORT_DIR}/{table}.parquet")
 
     save_parquet(
         df,
         output_file,
     )
 
-    return output_file
+    return {
+        "table": table,
+        "rows": len(df),
+        "output_file": str(output_file),
+    }

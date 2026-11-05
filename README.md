@@ -1,20 +1,20 @@
 # ☁️ storage_azure
 
-### Publishing Layer for Analytical Datasets on zure Data Lake Storage Gen2
+### Datast Publishing Platform for Azure Data Lake Storage Gen2
 
 ![Python](https://img.shields.io/badge/Python-3.12+-yellow)
 ![Azure](https://img.shields.io/badge/Azure-ADLS_Gen2-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-<br><br>
+<br><Br>
 
 ## 🎯 Objetivo
 
-O **storage_azure** é uma camada reutilizável de engenharia de dados responsável por publicar datasets analíticos em ambientes Azure.
+O **storage_azure** é uma plataforma de publicação de datasets analíticos projetada para transformar bases relacionais em ativos governados e distribuíveis.
 
-O projeto foi criado para desacoplar a geração de dados da sua distribuição e armazenamento, permitindo que projetos analíticos utilizem uma infraestrutura única para publicação em:
+O projeto desacopla a produção dos dados da sua distribuição, permitindo que aplicações analíticas publiquem datasets padronizados em:
 
-- Azure Data Lake Storage Gen2 (ADLS)
+- Azure Data Lake Storage Gen2 (ADLS Gen2)
 - Parquet
 - Power BI
 - Ferramentas analíticas futuras
@@ -23,10 +23,11 @@ O projeto foi criado para desacoplar a geração de dados da sua distribuição 
 
 ## 🏗️ Filosofia
 
-O objetivo do projeto não é coletar dados.  
-A coleta e transformação permanecem nos projetos de domínio.
+O storage_azure não coleta dados.
 
-Por exemplo:
+A responsabilidade de coleta, transformação e modelagem permanece nos projetos de domínio.
+
+Exemplo:
 
 ```text
 Inflation Analytics Brasil
@@ -38,186 +39,308 @@ Inflation Analytics Brasil
       storage_azure
             │
             ▼
-         Parquet
+         Registry
+            │
+            ▼
+         Metadata
+            │
+            ▼
+          Parquet
             │
             ▼
         ADLS Gen2
             │
             ▼
-        Power BI
+         Power BI
 ```
 
-Dessa forma:
+<br><Br>
 
-- inflation_bcb produz conhecimento
-- storage_azure distribui dados
+## 📦 Conceitos Principais
 
-<br><br>
+### Dataset
 
+Unidade de publicação da plataforma.
 
-## 📦 Casos de Uso
-
-- **Exportar uma tabela PostgreSQL**
+Exemplo:
 
 ```python
-export_table(
-    schema="bcb",
-    table="ipca_geral"
-)
-```
-
-- **Gerar arquivo Parquet**
-
-```python
-save_parquet(df)
-```
-
-<br>
-
-- **Publicar dataset no ADLS**
-
-```python
-upload_parquet(
-    local_file,
-    container="economics"
+publish_dataset(
+    "ipca_geral"
 )
 ```
 
 <br>
 
-- **Exportar um schema inteiro**
+### Projeto
+
+Conjunto de datasets.
+
+Exemplo:
 
 ```python
-export_schema("bcb")
+publish_project(
+    "inflation_bcb"
+)
 ```
 
-<br><br>
+<br>
+
+### Registry
+
+Catálogo oficial dos datasets.
+
+Exemplo:
+
+```python
+DATASETS = {
+    "ipca_geral": {
+        "schema": "bcb",
+        "table": "ipca_geral",
+        "project": "inflation_bcb",
+        "domain": "economics",
+        "owner": "IncomeView",
+        "container": "economics",
+        "layer": "gold",
+        "format": "parquet",
+    }
+}
+```
+
+<br>
+
+### Metadata
+
+Todo dataset publicado possui:
+
+```text
+dataset
+schema
+table
+project
+domain
+owner
+container
+layer
+rows
+columns
+exported_at
+```
+
+<br><Br>
+
+## 🔄 Dataset Lifecycle
+
+```text
+    Registry
+        │
+        ▼
+    Metadata
+        │
+        ▼
+    Parquet
+        │
+        ▼
+    ADLS Gen2
+        │
+        ▼
+    Power BI
+```
+
+<br><Br>
 
 ## 📂 Arquitetura
 
 ```text
-.src
-    publishing
+src.
+    storage_azure
     │
     ├── azure
     │   ├── auth.py
     │   ├── adls.py
-    │   └── containers.py
+    │   ├── containers.py
+    │   ├── contracts.py
+    │   ├── upload.py
+    │   └── upload_project.py
     │
     ├── database
     │   └── postgres.py
     │
     ├── datasets
     │   ├── registry.py
-    │   └── metadata.py
+    │   ├── catalog.py
+    │   ├── metadata.py
+    │   └── path_builder.py
     │
     ├── parquet
     │   └── writer.py
     │
     ├── pipelines
-    │   └── export_dataset.py
+    │   ├── export_dataset.py
+    │   ├── export_schema.py
+    │   ├── publish_dataset.py
+    │   └── publish_project.py
     │
-    └── cli.py
+    └── settings.py
 ```
 
-<Br><br>
-
-## 🔄 Fluxo de Dados
-
-```text
-    PostgreSQL
-        │
-        ▼
-    DataFrame
-        │
-        ▼
-     Parquet
-        │
-        ▼
-    ADLS Gen2
-        │
-        ▼
-     Power BI
-```
-
-<br><br>
+<br><Br>
 
 ## ☁️ Azure
 
-O projeto utiliza:
+Tecnologias utilizadas:
 
-- Azure Data Lake Storage Gen2
-- Azure Identity
 - Azure Entra ID
-- Service Principal ou DefaultAzureCredential
+- Azure Identity
+- Azure Storage SDK
+- Azure Data Lake Storage Gen2
 
-Suporta:
-
-- Local Development
-- GitHub Actions
-- Azure Cloud
-
-
-<br><br>
-
-## 📁 Organização dos Dados
-
-Estrutura sugerida:
+Estrutura padrão:
 
 ```text
-    economics/
-    │
-    ├── ipca/
-    ├── selic/
-    ├── expectations/
-    └── features/
+economics
+└── gold
+    └── inflation_bcb
+        ├── ipca_geral.parquet
+        ├── ipca_geral.metadata.json
+        ├── ipca_grupos.parquet
+        ├── ipca_grupos.metadata.json
+        └── ...
 ```
 
-ou
+<br><Br>
 
-```text
-    bronze/
-    silver/
-    gold/
+## 📊 Casos de Uso
+
+### Publicar Dataset
+
+```python
+publish_dataset(
+    "ipca_geral"
+)
 ```
 
-dependendo da estratégia adotada.
+<br>
 
-<br><br>
+### Publicar Projeto
+
+```python
+publish_project(
+    "inflation_bcb"
+)
+```
+
+<br>
+
+### Upload Dataset
+
+```python
+upload_dataset(
+    "ipca_geral"
+)
+```
+
+<br>
+
+### Upload Projeto
+
+```python
+upload_project(
+    "inflation_bcb"
+)
+```
+
+<br><Br>
+
+## ✅ Funcionalidades Implementadas
+
+### Governança
+
+- Dataset Registry
+- Metadata Catalog
+- Dataset Contracts
+- Dataset Ownership
+- Layer Classification
+
+### Engenharia de Dados
+
+- PostgreSQL Integration
+- Dataset Export
+- Schema Export
+- Parquet Generation
+
+### Cloud
+
+- Azure Authentication
+- Azure RBAC
+- ADLS Gen2
+- Dataset Upload
+- Project Upload
+
+<br><Br>
 
 ## 🔧 Tecnologias
 
-- Python
+### Dados
+
+- PostgreSQL
+- Parquet
 - Pandas
 - PyArrow
-- PostgreSQL
-- Azure SDK
+
+### Cloud
+
+- Azure Entra ID
+- Azure Identity
 - ADLS Gen2
-- GitHub Actions
+
+### Engenharia
+
+- Python
+- Git
+- GitHub
+- Pipelines
 
 <br><Br>
 
 ## 🚀 Roadmap
 
-### V1
+### ✅ V1 - Dataset Publishing Platform
 
-- [ ] Exportar tabela PostgreSQL
-- [ ] Gerar Parquet
-- [ ] Upload para ADLS
-- [ ] Configuração por .env
+- [x] PostgreSQL integration
+- [x] Dataset Registry
+- [x] Metadata Catalog
+- [x] Dataset Governance
+- [x] Parquet Generation
+- [x] Publish Dataset
+- [x] Publish Project
+- [x] Azure Authentication
+- [x] ADLS Gen2 Integration
+- [x] Upload Dataset
+- [x] Upload Project
 
-### V1.1
+### 🔄 V1.1 - Data Governance
 
-- [ ] Exportar schema completo
-- [ ] Registro de datasets
-- [ ] Metadata catalog
+- [ ] Dataset Lineage
+- [ ] Dataset Versioning
+- [ ] Dataset Validation
+- [ ] Data Quality Checks
+- [ ] Dataset Statistics
 
-### V2
+### 🔄 V2 - Analytics Delivery
 
-- [ ] Versionamento de datasets
-- [ ] Data Lineage
-- [ ] Qualidade de dados
-- [ ] Integração automática com Power BI
+- [ ] Power BI Integration
+- [ ] Incremental Publishing
+- [ ] Dataset Monitoring
+- [ ] Observability
+- [ ] CLI Commands
+
+### 🔮 V3 - Enterprise Data Platform
+
+- [ ] Multi-project Support
+- [ ] Data Contracts
+- [ ] OpenMetadata Integration
+- [ ] Automated Knowledge Base
 
 <br><Br>
 
@@ -225,12 +348,12 @@ dependendo da estratégia adotada.
 
 ### Inflation Analytics Brasil
 
-Projeto de analytics, econometria e machine learning responsável pela produção dos datasets econômicos.
+Plataforma analítica de inflação e política monetária responsável pela produção dos datasets econômicos.
 
 Fluxo:
 
 ```text
- Inflation Analytics Brasil
+Inflation Analytics Brasil
             │
             ▼
         PostgreSQL
@@ -239,16 +362,16 @@ Fluxo:
       storage_azure
             │
             ▼
-          ADLS
+         ADLS Gen2
             │
             ▼
-        Power BI
+         Power BI
 ```
 
-<br><br>
+<br><Br>
 
 ## 👤 Autor
 
 Moacir Magalhães Faria
 
-Data Engineering • Analytics • Econometrics • Machine Learning
+Data Engineering • Data Governance • Analytics • Econometrics • Machine Learning

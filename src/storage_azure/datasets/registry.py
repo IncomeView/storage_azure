@@ -2,12 +2,13 @@
 
 
 DATASETS = {
-
     "ipca_geral": {
         "schema": "bcb",
         "table": "ipca_geral",
         "description": "IPCA geral",
         "project": "inflation_bcb",
+        "owner": "IncomeView",
+        "domain": "economics",
         "container": "economics",
         "layer": "gold",
         "format": "parquet",
@@ -17,6 +18,8 @@ DATASETS = {
         "table": "ipca_grupos",
         "description": "IPCA por grupos",
         "project": "inflation_bcb",
+        "owner": "IncomeView",
+        "domain": "economics",
         "container": "economics",
         "layer": "gold",
         "format": "parquet",
@@ -26,6 +29,8 @@ DATASETS = {
         "table": "ipca_subgrupos",
         "description": "IPCA por subgrupos",
         "project": "inflation_bcb",
+        "owner": "IncomeView",
+        "domain": "economics",
         "container": "economics",
         "layer": "gold",
         "format": "parquet",
@@ -35,6 +40,8 @@ DATASETS = {
         "table": "ipca_itens",
         "description": "IPCA por itens",
         "project": "inflation_bcb",
+        "owner": "IncomeView",
+        "domain": "economics",
         "container": "economics",
         "layer": "gold",
         "format": "parquet",
@@ -44,6 +51,8 @@ DATASETS = {
         "table": "ipca_subitens",
         "description": "IPCA por subitens",
         "project": "inflation_bcb",
+        "owner": "IncomeView",
+        "domain": "economics",
         "container": "economics",
         "layer": "gold",
         "format": "parquet",

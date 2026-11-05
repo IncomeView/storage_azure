@@ -19,7 +19,6 @@ def publish_dataset(dataset_name: str,):
     )
 
     return {
-
         "dataset": dataset_name,
         "project": dataset["project"],
         "container": dataset["container"],

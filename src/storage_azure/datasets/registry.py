@@ -86,4 +86,16 @@ DATASETS = {
         "layer": "gold",
         "format": "parquet",
     },
+    "vw_ipca_grupos_por_subitens": {
+        "schema": "bcb",
+        "dataset_type": "view",
+        "table": "vw_ipca_grupos_por_subitens",
+        "description": "grupos ipca por subitens",
+        "project": "inflation",
+        "owner": "IncomeView",
+        "domain": "economics",
+        "container": "economics",
+        "layer": "gold",
+        "format": "parquet",
+    },
 }

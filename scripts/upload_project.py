@@ -1,4 +1,4 @@
-# tests/test_upload_all_projects.py
+# scripts/upload_projects.py
 
 from storage_azure.datasets.catalog import (list_projects)
 from storage_azure.azure.upload_project import (upload_project)

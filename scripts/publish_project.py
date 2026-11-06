@@ -1,4 +1,4 @@
-# tests/test_publish_all_projects.py
+# scripts/publish_projects.py
 
 from storage_azure.datasets.catalog import (list_projects)
 from storage_azure.pipelines.publish_project import (publish_project)

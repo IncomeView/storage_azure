@@ -9,6 +9,7 @@ def main():
     parser.add_argument(
         "--dataset",
         required=True,
+        help="Dataset name",
     )
 
     args = parser.parse_args()

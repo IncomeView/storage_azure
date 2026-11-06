@@ -37,6 +37,7 @@ def publish_dataset(dataset_name: str):
 
     return {
         "dataset": dataset_name,
+        "dataset_type": dataset["table"],
         "project": dataset["project"],
         "container": dataset["container"],
         "layer": dataset["layer"],

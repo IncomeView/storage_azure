@@ -1,10 +1,10 @@
-# scripts/publish_projects.py
+# scripts/publish_all_projects.py
 
 from storage_azure.datasets.catalog import (list_projects)
 from storage_azure.pipelines.publish_project import (publish_project)
 
 
-if __name__ == "__main__":
+def main():
     for project in list_projects():
         result = publish_project(project)
 
@@ -12,3 +12,7 @@ if __name__ == "__main__":
             f"{project}: "
             f"{len(result)} datasets publicados"
         )
+
+
+if __name__ == "__main__":
+    main()

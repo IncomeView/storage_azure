@@ -52,14 +52,14 @@ podem ser publicados.
 
 Exemplos:
 
-✅ ipca_geral
-✅ ipca_grupos
-✅ ipca_itens
-✅ vw_ipca_hierarquia
-✅ vw_ipca_taxonomia
-❌ vw_tmp_import
-❌ vw_validation
-❌ vw_debug
+✅ ipca_geral  
+✅ ipca_grupos  
+✅ ipca_itens  
+✅ vw_ipca_hierarquia  
+✅ vw_ipca_taxonomia  
+❌ vw_tmp_import  
+❌ vw_validation  
+❌ vw_debug  
 
 O Registry representa o catálogo oficial
 da plataforma.
@@ -277,6 +277,27 @@ Resultado:
 <br><br>
 
 ------------------------------------------------------------
+ETAPA 09.1 - OPERATIONAL SCRIPTS
+------------------------------------------------------------
+
+Diretório: `scripts/`
+
+- Responsabilidade: Operar a plataforma.
+
+Arquivos:
+
+- `publish_dataset.py`
+- `publish_project.py`
+- `publish_all_projects.py`
+- `upload_dataset.py`
+- `upload_project.py`
+- `upload_all_projects.py`
+- `generate_project_knowledge_base.py`
+
+
+<br><br>
+
+------------------------------------------------------------
 ETAPA 10 - AZURE AUTHENTICATION
 ------------------------------------------------------------
 
@@ -329,6 +350,23 @@ Funções:
 Objetivo:
 
 - Descobrir datasets já publicados.
+
+
+<br><br>
+
+------------------------------------------------------------
+ETAPA 12.1 - DISCOVERY
+------------------------------------------------------------
+
+- Responsabilidade: Descobrir e validar datasets já publicados.
+
+Funções:
+- `list_containers()`
+- `list_paths()`
+- `list_project_files()`
+- `dataset_exists()`
+
+Objetivo: Permitir navegação e auditoria do Data Lake.
 
 
 <br><br>
@@ -387,12 +425,26 @@ Resultado:
 EXECUÇÃO OPERACIONAL
 ============================================================
 
-Publicar datasets localmente: make publish
-Enviar datasets para o ADLS: make upload
-Identificar conteúdo postgres: make upload
-Inspecionar Data Lake: make discover
-Gerar documentação automática: make knowledge
-Executar fluxo completo: make all
+DATASET
+- make publish-dataset DATASET=ipca_geral
+- make upload-dataset DATASET=ipca_geral
+
+PROJETO
+- make publish-project PROJECT=inflation_bcb
+- make upload-project PROJECT=inflation_bcb
+
+PLATAFORMA
+- make publish-all
+- make upload-all
+
+DISCOVERY
+- make discover
+
+DOCUMENTAÇÃO
+- make knowledge
+
+EXECUÇÃO COMPLETA
+- make all
 
 <br><br>
 
@@ -440,15 +492,21 @@ EXECUÇÃO COMPLETA
                 ↓
              Registry
                 ↓
-             Metadata
-                ↓
-             Parquet
-                ↓
          Publish Dataset
                 ↓
          Publish Project
                 ↓
+        Publish All Projects
+                ↓
+             Metadata
+                ↓
+             Parquet
+                ↓
           Upload Dataset
+                ↓
+          Upload Project
+                ↓
+        Upload All Projects
                 ↓
             ADLS Gen2
                 ↓

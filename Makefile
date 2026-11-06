@@ -13,7 +13,7 @@
 
 help:
 	@echo ""
-	@echo "Storage Azure Commands"
+	@echo "Storage Azure Platform"
 	@echo ""
 	@echo "DATASET"
 	@echo "  make publish-dataset DATASET=ipca_geral"
@@ -42,7 +42,6 @@ help:
 publish-dataset:
 	python scripts/publish_dataset.py \
 		--dataset $(DATASET)
-
 upload-dataset:
 	python scripts/upload_dataset.py \
 		--dataset $(DATASET)
@@ -51,7 +50,6 @@ upload-dataset:
 publish-project:
 	python scripts/publish_project.py \
 		--project $(PROJECT)
-
 upload-project:
 	python scripts/upload_project.py \
 		--project $(PROJECT)
@@ -59,7 +57,6 @@ upload-project:
 # ALL PROJECTS
 publish-all:
 	python scripts/publish_all_projects.py
-
 upload-all:
 	python scripts/upload_all_projects.py
 
@@ -68,10 +65,7 @@ catalog:
 	python tests/test_catalog.py
 
 discover:
-	python tests/test_containers.py
-	python tests/test_paths.py
-	python tests/test_project_files.py
-	python tests/test_dataset_exists.py
+	python scripts/discover_adls.py
 
 # DOCUMENTATION
 knowledge:

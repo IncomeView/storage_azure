@@ -31,7 +31,6 @@ dist/
 .azure/
 
 # Generated files
-docs/_PROJECT_KNOWLEDGE_BASE.md
 docs/_PROJECT_RAG_INDEX.json
 docs/_PROJECT_ARCHITECTURE.json
 

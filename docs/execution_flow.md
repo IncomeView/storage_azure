@@ -24,6 +24,47 @@ Arquitetura principal:
         Power BI
 ```
 
+
+<br><br>
+
+============================================================
+ETAPA 00 - GOVERNANÇA
+============================================================
+
+- Pergunta: Este objeto deve ser publicado?  
+Nem toda tabela ou view do PostgreSQL
+deve ser enviada ao ADLS.
+
+Critério:
+
+```text
+    PostgreSQL
+        ↓
+    Governança
+        ↓
+     Registry
+        ↓
+    Publicação
+```
+
+Somente datasets registrados
+podem ser publicados.
+
+Exemplos:
+
+✅ ipca_geral
+✅ ipca_grupos
+✅ ipca_itens
+✅ vw_ipca_hierarquia
+✅ vw_ipca_taxonomia
+❌ vw_tmp_import
+❌ vw_validation
+❌ vw_debug
+
+O Registry representa o catálogo oficial
+da plataforma.
+
+
 <br><br>
 
 ------------------------------------------------------------
@@ -338,6 +379,20 @@ Resultado:
 
 - Todos os datasets do projeto publicados.
 
+
+<br><br>
+
+
+============================================================
+EXECUÇÃO OPERACIONAL
+============================================================
+
+Publicar datasets localmente: make publish
+Enviar datasets para o ADLS: make upload
+Identificar conteúdo postgres: make upload
+Inspecionar Data Lake: make discover
+Gerar documentação automática: make knowledge
+Executar fluxo completo: make all
 
 <br><br>
 

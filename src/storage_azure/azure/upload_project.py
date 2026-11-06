@@ -1,7 +1,7 @@
 # src/storage_azure/azure/upload_project.py
 
 from storage_azure.datasets.registry import (DATASETS)
-from analytics.storage_azure.src.storage_azure.azure.upload_dataset import (upload_dataset)
+from storage_azure.azure.upload_dataset import (upload_dataset)
 
 
 def upload_project(project_name: str):

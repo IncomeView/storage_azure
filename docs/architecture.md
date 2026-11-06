@@ -7,19 +7,19 @@ Publicar datasets governados produzidos por projetos analíticos.
 ## Fluxo
 
 ```text
-Project
-    ↓
-PostgreSQL
-    ↓
-Registry
-    ↓
-Metadata
-    ↓
-Parquet
-    ↓
-ADLS Gen2
-    ↓
-Power BI
+    Project
+        ↓
+    PostgreSQL
+        ↓
+    Registry
+        ↓
+    Metadata
+        ↓
+    Parquet
+        ↓
+    ADLS Gen2
+        ↓
+    Power BI
 ```
 
 ## Estrutura ADLS

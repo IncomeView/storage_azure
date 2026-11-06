@@ -1,6 +1,6 @@
 # STORAGE AZURE KNOWLEDGE BASE
 
-Generated: 2026-11-05 22:02:28
+Generated: 2026-11-06 09:29:58
 
 ---
 
@@ -9,14 +9,14 @@ Generated: 2026-11-05 22:02:28
 Storage Azure is a data publishing platform responsible for transforming analytical datasets into governed assets stored in Azure Data Lake Storage Gen2.
 
 - project_name: storage_azure
-- datasets: 5
+- datasets: 6
 - projects: 1
 - domains: 1
 - containers: 1
 - layers: 1
-- python_files: 40
-- markdown_files: 2
-- files: 44
+- python_files: 43
+- markdown_files: 3
+- files: 49
 
 ---
 
@@ -84,7 +84,8 @@ Power BI
 ```text
 storage_azure
 ├── docs
-│   └── architecture.md
+│   ├── architecture.md
+│   └── execution_flow.md
 ├── exports
 ├── scripts
 │   └── generate_project_knowledge_base.py
@@ -125,18 +126,22 @@ storage_azure
 │   ├── test_catalog.py
 │   ├── test_connection.py
 │   ├── test_containers.py
+│   ├── test_dataset_exists.py
 │   ├── test_export_ipca.py
 │   ├── test_export_schema.py
 │   ├── test_generate_metadata.py
 │   ├── test_metadata.py
 │   ├── test_metadata_file.py
+│   ├── test_paths.py
 │   ├── test_pipeline.py
+│   ├── test_project_files.py
 │   ├── test_publish_dataset.py
 │   ├── test_publish_project.py
 │   ├── test_upload_dataset.py
 │   ├── test_upload_file.py
 │   └── test_upload_project.py
 ├── .gitignore
+├── Makefile
 ├── pyproject.toml
 └── README.md
 ```
@@ -168,6 +173,7 @@ storage_azure
 ### ipca_geral
 
 - schema: bcb
+- dataset_type: table
 - table: ipca_geral
 - description: IPCA geral
 - project: inflation_bcb
@@ -180,6 +186,7 @@ storage_azure
 ### ipca_grupos
 
 - schema: bcb
+- dataset_type: table
 - table: ipca_grupos
 - description: IPCA por grupos
 - project: inflation_bcb
@@ -192,6 +199,7 @@ storage_azure
 ### ipca_subgrupos
 
 - schema: bcb
+- dataset_type: table
 - table: ipca_subgrupos
 - description: IPCA por subgrupos
 - project: inflation_bcb
@@ -204,6 +212,7 @@ storage_azure
 ### ipca_itens
 
 - schema: bcb
+- dataset_type: table
 - table: ipca_itens
 - description: IPCA por itens
 - project: inflation_bcb
@@ -216,8 +225,22 @@ storage_azure
 ### ipca_subitens
 
 - schema: bcb
+- dataset_type: table
 - table: ipca_subitens
 - description: IPCA por subitens
+- project: inflation_bcb
+- owner: IncomeView
+- domain: economics
+- container: economics
+- layer: gold
+- format: parquet
+
+### ipca_taxonomia
+
+- schema: bcb
+- dataset_type: table
+- table: ipca_taxonomia
+- description: taxonomia ipca por subitens
 - project: inflation_bcb
 - owner: IncomeView
 - domain: economics

@@ -4,6 +4,7 @@
 DATASETS = {
     "ipca_geral": {
         "schema": "bcb",
+        "dataset_type": "table",
         "table": "ipca_geral",
         "description": "IPCA geral",
         "project": "inflation_bcb",
@@ -15,6 +16,7 @@ DATASETS = {
     },
     "ipca_grupos": {
         "schema": "bcb",
+        "dataset_type": "table",
         "table": "ipca_grupos",
         "description": "IPCA por grupos",
         "project": "inflation_bcb",
@@ -26,6 +28,7 @@ DATASETS = {
     },
     "ipca_subgrupos": {
         "schema": "bcb",
+        "dataset_type": "table",
         "table": "ipca_subgrupos",
         "description": "IPCA por subgrupos",
         "project": "inflation_bcb",
@@ -37,6 +40,7 @@ DATASETS = {
     },
     "ipca_itens": {
         "schema": "bcb",
+        "dataset_type": "table",
         "table": "ipca_itens",
         "description": "IPCA por itens",
         "project": "inflation_bcb",
@@ -48,9 +52,22 @@ DATASETS = {
     },
     "ipca_subitens": {
         "schema": "bcb",
+        "dataset_type": "table",
         "table": "ipca_subitens",
         "description": "IPCA por subitens",
         "project": "inflation_bcb",
+        "owner": "IncomeView",
+        "domain": "economics",
+        "container": "economics",
+        "layer": "gold",
+        "format": "parquet",
+    },
+    "ipca_taxonomia": {
+        "schema": "bcb",
+        "dataset_type": "table",
+        "table": "ipca_taxonomia",
+        "description": "taxonomia ipca por subitens",
+        "project": "inflation",
         "owner": "IncomeView",
         "domain": "economics",
         "container": "economics",
